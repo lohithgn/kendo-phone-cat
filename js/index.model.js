@@ -4,7 +4,7 @@ var indexModel = kendo.observable({
     phones:new kendo.data.DataSource({
             transport:{
                 read:{
-                    url:"phones/phones.json"
+                    url:"https://raw.githubusercontent.com/lohithgn/kendo-phone-cat/gh-pages/phones/phones.json"
                 }
             },
             serverFiltering:false,
