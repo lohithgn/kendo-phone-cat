@@ -2,7 +2,7 @@ var detailModel = kendo.observable({
     selectedPhone:null,
     setSelectedPhone: function(phoneId){
         var that = this;
-        var url = "/phones/" + phoneId + ".json";
+        var url = "phones/" + phoneId + ".json";
         kendo.ui.progress($(document.body), true);
         $.getJSON(url).then(function(data){
             that.set("selectedPhone", data);
