@@ -1,0 +1,116 @@
+
+body{
+    height: 100%;
+    background: #0c0c0c url('../img/shattered.png') repeat left top;
+    color:#000;
+}
+
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border:0.02em solid gray;
+}
+
+h1.header{
+  display: inline-block;
+  height: 32px;
+  margin-bottom: 20px;
+}
+
+h1 a, h1 a:focus, h1 a:hover{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color:#cc3640;
+    text-decoration: none;
+}
+
+
+#footer{
+    position: relative;
+    /*border-top: 1px solid #535353;*/
+    font-size: 12px;
+    padding-bottom: 60px;
+    color: #999;
+    margin-top:15px;
+}
+
+#footer p {
+    margin: 10px 0;
+}
+
+
+#footer a {
+    color: #d60041;
+}
+
+#phone-list{
+    border : 0px;
+}
+
+.phone-list-item{
+    padding:10px;
+    border:0.02em solid darkgrey;
+    margin-bottom:10px;
+    margin-right:10px;
+    width:340px;
+    float:left;
+    height:170px;
+    background-color: #FFF
+}
+
+.phone-list-item h4{
+    color: #cc3640;
+    font-size: 21px;
+    font-weight: normal;
+}
+
+.phone-list-item-image{
+    padding-right:10px;
+    width:100px;
+    height:150px
+}
+
+.index-template-container{
+    margin-top:15px;
+    margin-bottom:15px
+}
+
+.search-label, .sortby-label{
+    font-size:20px
+}
+
+.phone-images-thumb
+{
+    border:1px solid #cc3640;
+    padding:5px;
+    margin:5px
+}
+
+.panel-primary{
+    border-color: #cc3640;
+}
+
+.panel-primary > .panel-heading{
+    background-color: #cc3640;
+    color:#FFF;
+}
+
+.h250{
+    min-height:250px;
+}
+
+.h435{
+    min-height:250px;
+}
+
+.h375{
+    min-height: 255px;
+}
+
+#phone-image{
+    width:375px;
+}

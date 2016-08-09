@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Kendo UI - PhoneCat</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common-nova.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.nova.min.css" rel="stylesheet" />
+    <link href="styles/style.css" rel="stylesheet">
+</head>
+
+<body>
+    
+    <div id="application"></div>
+
+    <script type="text/x-kendo-template" id="layout-template">
+            <div class="container">
+                <div class="row" style="margin-top:15px;margin-bottom:15px;">
+                    <div class="col-lg-12"><h1 class="header"><a  href="#/">Google Phone Gallery</a></h1></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" id="content">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row>
+                    <div class="col-lg-12">
+                        <div id="footer">
+                            <p>Learn more about Kendo UI<sup>&reg;</sup> SPA at <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/spa/overview">docs.telerik.com/kendo-ui</a>.</p>
+                            
+                            <p>Copyright &copy; 2016, Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.</p>
+                        </div>
+                </div>
+            </div>
+        </script>
+
+    <script type="text/x-kendo-template" id="index-template">
+            <div class="row index-template-container">
+                <div class="col-lg-4">
+                    <p>
+                        <span class="search-label">Search:</span>
+                        <input type="text" class="k-textbox" data-bind="value:query,events:{keyup:filter}" data-value-update="keyup"/>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <p >
+                        <span class="sortby-label">Sort by:</span>
+                        <select data-role="dropdownlist" data-bind="value:sort,events:{change:sortData}">
+                            <option value="name">Alphabetical</option>
+                            <option value="age">Newest</option>
+                        </select>
+                    </p>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col-lg-12"> 
+                    <div id="phone-list" data-role="listview"
+                                        data-bind="source:phones"
+                                        data-template="phone-list-item-tmpl"
+                                        data-selectable="false">
+                    </div>
+                </div>
+            </div>
+        </script>
+
+    <script type="text/x-kendo-tmpl" id="phone-list-item-tmpl">
+            <div class="clearfix phone-list-item">
+                <img src="${imageUrl}" class="img-rounded pull-left phone-list-item-image" />
+                <div class="clearfix" style="margin:10px">
+                    <a href="\#/details/#: id #"><h4>${name}</h4></a>
+                    <small>${snippet}</small>
+                </div>
+            </div>
+        </script>
+
+    <script type="text/x-kendo-template" id="detail-template">
+        <div class="container" style="background-color:#FFF;color:#000">    
+            <div class="row" >
+                <div class="col-lg-12">
+                    <h1 data-bind="text:selectedPhone.name"></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>
+                                <div data-bind="text: selectedPhone.description"></div>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h250">
+                                <div class="panel-heading">Availability and Networks</div>
+                                <div class="panel-body">
+                                    <h5><b>Availability</b></h5>
+                                    <div data-bind="source:selectedPhone.availability" data-template="genericTemplate" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h250">
+                                <div class="panel-heading">Battery</div>
+                                <div class="panel-body">
+                                    <h5><b>Type</b></h5>
+                                    <span data-bind="text:selectedPhone.battery.type"></span>
+                                    <h5><b>Talk Time</b></h5>
+                                    <span data-bind="text:selectedPhone.battery.talkTime"></span>
+                                    <h5><b>Standby time (max)</b></h5>
+                                    <span data-bind="text:selectedPhone.battery.standbyTime"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h250">
+                                <div class="panel-heading">Storage and Memory</div>
+                                <div class="panel-body">
+                                    <h5><b>RAM</b></h5>
+                                    <span data-bind="text:selectedPhone.storage.ram"></span>
+                                    <h5><b>Internal Storage</b></h5>
+                                    <span data-bind="text:selectedPhone.storage.flash"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h435" >
+                                <div class="panel-heading">Connectivity</div>
+                                <div class="panel-body">
+                                    <h5><b>Network Support</b></h5>
+                                    <span data-bind="text:selectedPhone.connectivity.cell"></span>
+                                    <h5><b>WiFi</b></h5>
+                                    <span data-bind="text:selectedPhone.connectivity.wifi"></span>
+                                    <h5><b>Bluetooth</b></h5>
+                                    <span data-bind="text:selectedPhone.connectivity.bluetooth"></span>
+                                    <h5><b>Infrared</b></h5>
+                                    <span data-bind="source:selectedPhone.connectivity.infrared" data-template="booleanTemplate"></span>
+                                    <h5><b>GPS</b></h5>
+                                    <span data-bind="source:selectedPhone.connectivity.gps" data-template="booleanTemplate"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h435">
+                                <div class="panel-heading">Android</div>
+                                <div class="panel-body">
+                                    <h5><b>OS Version</b></h5>
+                                    <span data-bind="text:selectedPhone.android.os"></span>
+                                    <h5><b>UI</b></h5>
+                                    <span data-bind="text:selectedPhone.android.ui"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h435">
+                                <div class="panel-heading">Size and Weight</div>
+                                <div class="panel-body">
+                                    <h5><b>Dimensions</b></h5>
+                                    <span data-bind="source:selectedPhone.sizeAndWeight.dimensions" data-template="genericTemplate"></span>
+                                    <h5><b>Weight</b></h5>
+                                    <span data-bind="text:selectedPhone.sizeAndWeight.weight"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h375">
+                                <div class="panel-heading">Display</div>
+                                <div class="panel-body">
+                                    <h5><b>Screen Size</b></h5>
+                                    <span data-bind="text:selectedPhone.display.screenSize"></span>
+                                    <h5><b>Screen Resolution</b></h5>
+                                    <span data-bind="text:selectedPhone.display.screenResolution"></span>
+                                    <h5><b>Touchscreen</b></h5>
+                                    <span data-bind="source:selectedPhone.display.touchScreen" data-template="booleanTemplate"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h375">
+                                <div class="panel-heading">Hardware</div>
+                                <div class="panel-body">
+                                    <h5><b>CPU</b></h5>
+                                    <span data-bind="text:selectedPhone.hardware.cpu"></span>
+                                    <h5><b>USB</b></h5>
+                                    <span data-bind="text:selectedPhone.hardware.usb"></span>
+                                    <h5><b>Audio/Headphone jack</b></h5>
+                                    <span data-bind="text:selectedPhone.hardware.audioJack"></span>
+                                    <h5><b>FM Radio</b></h5>
+                                    <span data-bind="source:selectedPhone.hardware.fmRadio" data-template="booleanTemplate"></span>
+                                    <h5><b>Accelerometer</b></h5>
+                                    <span data-bind="source:selectedPhone.hardware.accelerometer" data-template="booleanTemplate"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-primary h375">
+                                <div class="panel-heading">Camera</div>
+                                <div class="panel-body">
+                                    <h5><b>Primary</b></h5>
+                                    <span data-bind="text:selectedPhone.camera.primary"></span>
+                                    <h5><b>Features</b></h5>
+                                    <span data-bind="source:selectedPhone.camera.features" data-template="genericTemplate2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Additional Features</div>
+                                <div class="panel-body">
+                                    <span data-bind="text:selectedPhone.additionalFeatures"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5" class="center-block">
+                    <img id="phone-image" data-bind="attr:{src: selectedPhone.images[0]}"  />
+                    <br>
+                    <div data-role="listview" 
+                         data-selectable="true" 
+                         data-bind="source:selectedPhone.images,events:{change:phoneImageClick}" 
+                         data-template="phone-images"></div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-kendo-tmpl" id="genericTemplate">
+        ${data} <br>
+    </script>
+    <script type="text/x-kendo-tmpl" id="genericTemplate2">
+        ${data}
+    </script>
+    <script type="text/x-kendo-tmpl" id="booleanTemplate">
+        #if(data){#✓#}else{#✘#}#
+    </script>
+    <script type="text/x-kendo-tmpl" id="phone-images">
+        <img data-bind="attr:{src:data,data-url:data}" width="60" height="60" class="phone-images-thumb pull-left"/>
+    </script>
+    <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.ui.core.min.js"></script>
+    <script src="js/index.model.js"></script>
+    <script src="js/detail.model.js"></script>
+    <script src="js/layout.model.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/phoncat.js"></script>
+</body>
+
+</html>
